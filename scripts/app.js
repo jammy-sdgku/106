@@ -8,3 +8,4 @@ function init(){
 }
 
 window.onload = init;  //this line waits for the logic and html to finish loading.
+
