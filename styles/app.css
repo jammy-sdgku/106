@@ -1,0 +1,51 @@
+/*global*/
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+	font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  background-color: #E66756;
+}
+
+p{
+  line-height: 1.5;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+h1 {
+  text-align: center;
+}
+/*container*/
+main {
+    width: 90%;
+    margin: 1.25em auto;
+}
+
+.flex-container {
+   border-radius: 20px;
+   overflow: hidden;
+}
+
+/*sectionA*/
+#sectionA {
+    flex:1;
+    border-radius: 20px;
+}
+/*sectionB*/
+#sectionB {
+    flex:1;
+}
+/*form*/
+#taskForm {
+  border-radius: 20px;
+}
+/*table*/
+
+
+/*footer*/

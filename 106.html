@@ -4,15 +4,91 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="app.css">
-    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
+
+<!--css scripts-->
+    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css"> 
+    <link rel="stylesheet" href="./styles/app.css">
     <title>106</title>
 </head>
 
 <body>
-    <h1>Welcome to 106</h1>
-   <script src="./scripts/app.js"></script> 
+    <h1>Task Tracking Page</h1>
+    <main class="d-flex flex-row bd-highlight mb-3">
+        
+        <section class="p-2 bg-info text-dark" id="sectionA">
+            <h2>Tasks Status</h2><br>
+            <div class="flex-container">
+                <table id="taskTable" table class="table table-bordered rounded">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>Color</th>
+                            <th>Start Date</th>
+                            <th>Status</th>
+                            <th>Budget</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+
+        </section>
+        <section class="p-2 bd-highlight" id="sectionB">
+            <form class="p-3 mb-2 bg-secondary text-white was-validated" novalidate id="taskForm">
+                <div class="mb-3">
+                    <label for="txtTitle" class="form-label">Title:</label>
+                    <input type="text" class="form-control shadow-none" id="txtTitle" name="title" minlength="2" required>
+                    <div class="invalid-feedback"> Please enter a title!</div>
+                    <div class="valid-feedback">Valid.</div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="taDescription" class="form-label">Description:</label>
+                    <textarea class="form-control shadow-none" id="taDescription" name="description" rows="3" minlength="2" required></textarea>
+                    <div class="invalid-feedback"> Please enter a description!</div>
+                    <div class="valid-feedback">Valid.</div>
+                </div>
+                <div class="mb-3">
+                    <label for="color" class="form-label">Color:</label>
+                    <input type="color" class="form-control shadow-none" id="color" name="color">
+                </div>
+                <div class="mb-3">
+                    <label for="selDate" class="form-label">Start Date:</label>
+                    <input type="Datetime-local" class="form-control shadow-none" id="selDate" name="startDate" required>
+                    <div class="invalid-feedback"> Please enter a start date!</div>
+                    <div class="valid-feedback">Valid.</div>   
+                </div>
+                <div class="mb-3">
+                    <label for="selStatus" class="form-label">Status:</label>
+                    <select class="form-select shadow-none" id="selStatus" name="status" required>
+                        <option value="">Select</option>
+                        <option value="Pending">Pending</option>
+                        <option value="In-Progress">In Progress</option>
+                        <option value="Completed">Completed</option>
+                        <div class="invalid-feedback"> Please enter a status!</div>
+                        <div class="valid-feedback">Valid.</div>
+                    </select>
+                </div>
+                <div class="mb-3 p-3 bg-secondary text-white">
+                    <label for="numBudget" class="form-label">Budget:</label>
+                    <input type="number" class="form-control shadow-none" id="numBudget" name="budget" min="0" required>
+                    <div class="invalid-feedback"> Please enter the task budget amount!</div>
+                    <div class="valid-feedback">Valid.</div> 
+                </div>
+                <button type="submit" class="btn btn-primary" id="taskBtn">Submit</button>
+            </form>
+        </section>
+    </main>
+
+<!--scripts-->
    <script src="./node_modules/jquery/dist/jquery.min.js"></script>
+   <script src="./node_modules/jquery-validation/dist/jquery.validate.min.js"></script>
+   <script src="./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+   <script src="./scripts/app.js"></script> 
 </body>
 
 </html>
