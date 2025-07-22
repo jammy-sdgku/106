@@ -1,0 +1,37 @@
+main {
+    display:flex;
+    height:100vh;
+}
+
+.task {
+    margin: 10px 20px;
+    padding: 10px;
+    display: flex;
+    border: 2px solid gray;
+}
+
+.task .info{
+    flex:3;
+}
+
+.task .status {
+    flex: 1;
+}
+
+.task .date-budget {
+    flex:1;
+}
+
+.list {
+    background-color: green;
+    flex: 1;
+    border-radius: 20px;
+}
+
+#form {
+    background-color: antiquewhite;
+    flex: 1;
+    align-items: center;
+    border-radius: 20px;
+    padding: 20px;
+}

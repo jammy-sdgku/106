@@ -14,60 +14,57 @@ const tableBody = document.querySelector('#taskTable tbody');
 //function to be triggered after clicking submit
 
 //save data ------------------------------------------------------------
-$("#taskBtn").click(function(event){
-       event.preventDefault();
+function saveTask(){
 
-        //get user info for the input
-        const newTask = {
-            title : $("#txtTitle").val().trim(),
-            description : $("#taDescription").val().trim(),
-            color : $("#color").val().trim(),
-            date : $("#selDate").val().trim(),
-            status : $("#selStatus").val().trim(),
-            budget : $("#numBudget").val().trim()
-        }
-
-        //get the users json created if doesent exist
-        let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-
-        //add the new users to users JSON
-        tasks.push(newTask);
-
-        //save to local storage
-        localStorage.setItem("tasks", JSON.stringify(tasks));
+//get user info for the input
+        const title = $("#txtTitle").val().trim();
+        const desc = $("#taDescription").val().trim();
+        const color = $("#selColor").val().trim();
+        const date = $("#selDate").val().trim();
+        const status = $("#selStatus").val().trim();
+        const budget = $("#numBudget").val().trim();
         
-    alert(`We saved your new task as ${newTask.title}, with a description of ${newTask.description}, a color of ${newTask.color}, a start date of ${newTask.date}, having a status of ${newTask.status}, and a task budget of ${newTask.budget} successfully! Thank you for your task entry!`);
+         console.log(title, desc, color, date, status, budget);
+
+//build an object
+        let data = new Task(title, desc, color,date ,status, budget );
+        console.log(data);
+
+//save to the server
+        $.ajax({
+        type: "post",
+        url: "http://fsdiapi.azurewebsites.net/api/tasks/",
+        data: JSON.stringify(data),
+        contentType: "application/json",
+        success: function(response){
+            console.log(response);
+        },
+        error: function(error){
+            console.log(error);
+        }
+    })
+    alert(`We saved your new task as ${data.title}, with a description of ${data.description}, a color of ${data.color}, a start date of ${data.date}, having a status of ${data.status}, and a task budget of ${data.budget} successfully! Thank you for your task entry!`);
      
     $("form").get(0).reset();
+}
+       
+//start here with display function---------------------------------------
+function displayTask(task){
+    
+    //send to HTML table for display
 
-    loadData(); 
-
-        
-//start here with load function---------------------------------------
-    function loadData(){
-
-        //get information stored
-        const titleStored = (newTask.title);
-        const descriptionStored = (newTask.description);
-        const colorStored = (newTask.color);
-        const dateStored = (newTask.date);
-        const statusStored = (newTask.status);
-        const budgetStored = (newTask.budget);
-        
-        
-        //send to HTML table
-        const newRow= document.createElement("tr");
-        newRow.innerHTML = `
-            <td>${titleStored}</td>    
-            <td>${descriptionStored}</td>
-            <td>${colorStored}</td>
-            <td>${dateStored}</td>
-            <td>${statusStored}</td>
-            <td>$${budgetStored}</td>
-            <td><button onclick="deleteData(this)">Delete</button></td>
-        `;
-        tableBody.appendChild(newRow);
-    }});
+    const newRow= document.createElement("tr");
+    newRow.innerHTML = `
+        <td>${task.title}</td>    
+        <td>${task.desc}</td>
+        <td>${task.color}</td>
+        <td>${task.date}</td>
+        <td style="background-color:${task.color}; color: white;">${task.status}</td>
+        <td>$${task.budget}</td>
+        <td><button class="btn btn-danger onclick="deleteData(this)">Delete</button></td>
+    `;
+    tableBody.append(newRow);
+}
      
 //delete row of data button
 function deleteData(button) {
@@ -79,4 +76,38 @@ function deleteData(button) {
     row.parentNode.removeChild(row);
 };
 
+// pull data from the server to show on page load.
+function loadTasks(){
+    $.ajax({
+        type:"get", 
+        url: "http://fsdiapi.azurewebsites.net/api/tasks",
+        success: function(response){
+//change the JSON back to an object
+            let dataJSON = JSON.parse(response);
+//to get only messages/entries created by me
+            for(let i=0;i<dataJSON.length;i++){
+                let currentValue = dataJSON[i]
+                if(currentValue.name == "Jay59"){
+                   displayTask(currentValue);
+                }
+            }
+//JSON data pulled back
+            console.log(response);
+//Object data pulled back and converted from JSON
+            console.log(dataJSON);         
+    },
+        error: function(error){
+            console.log(error);
+        }
+    });
+}
 
+// initial loading of data on page load
+function init()
+{
+    console.log("hello im the init");
+    $("#taskBtn").click(saveTask);
+    loadTasks();
+}
+
+window.onload = init;// it waits until the css and the html resolved to run the logic
